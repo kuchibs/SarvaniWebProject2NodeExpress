@@ -1,0 +1,16 @@
+<h1>This is Movie application</h1>
+
+
+<ul>
+<%  movies.forEach(function(movie){  %>
+    <li> <%= movie %>    </li>
+<%  });  %>
+</ul>
+
+
+<form action="/addMovie" method="POST">
+    <label> Enter new movie name: 
+        <input type="text" name="movie"> </input> 
+    </label>
+    <button type="Submit"> Submit </button>
+</form>
