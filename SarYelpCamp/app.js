@@ -4,6 +4,7 @@ var ejs        = require("ejs");
 var request    = require("request");
 
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extend:true}));
 
 
 /*var campgroundsArr = [
@@ -42,6 +43,17 @@ app.get("/", function(req, resp){
 
 
 app.get("/campgrounds", function(req, resp){
+    resp.render("campGrounds", {campgroundsArr : campgroundsArr});
+});
+
+app.get("/new", function(req, resp){
+    resp.render("new");
+});
+
+
+app.post("/campgrounds", function(req, resp){
+    console.log(req.body.campground);
+    campgroundsArr.push({name:req.body.campground, image:req.body.image});
     resp.render("campGrounds", {campgroundsArr : campgroundsArr});
 });
 
