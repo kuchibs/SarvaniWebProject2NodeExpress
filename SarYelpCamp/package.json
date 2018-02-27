@@ -1,0 +1,30 @@
+{
+  "name": "yelp-camp",
+  "version": "1.0.0",
+  "description": "A simple camp ground example with MEAN  stack - HTML, JS, CSS, bootstrap,awesome fonts and NodeJS, EJS, Express, Mongo etc",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuchibs/SarvaniWebProject2NodeExpress.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Sarvani Kuchibhotla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kuchibs/SarvaniWebProject2NodeExpress/issues"
+  },
+  "homepage": "https://github.com/kuchibs/SarvaniWebProject2NodeExpress#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  }
+}
