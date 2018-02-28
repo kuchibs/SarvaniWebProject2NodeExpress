@@ -1,0 +1,23 @@
+{
+  "name": "db-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cats.js",
+  "dependencies": {
+    "mongoose": "^5.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuchibs/SarvaniWebProject2NodeExpress.git"
+  },
+  "author": "Sarvani K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kuchibs/SarvaniWebProject2NodeExpress/issues"
+  },
+  "homepage": "https://github.com/kuchibs/SarvaniWebProject2NodeExpress#readme"
+}
