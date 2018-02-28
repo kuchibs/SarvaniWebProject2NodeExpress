@@ -18,7 +18,7 @@ var catSchema = new mongoose.Schema({
 var Cat = mongoose.model("Cat", catSchema);
 
 //add new cat to db
-
+/*
 var akshu = new Cat({
      name: "Bhavani",
    age: 6,
@@ -35,4 +35,20 @@ akshu.save(function(err, cat){
         console.log("Cat added  to db"+cat);        
     }
     
+});*/
+
+Cat.create({
+    name:"Sarvani", 
+    age:30
+}, function(err, cat){
+    
+});
+
+Cat.find({}, function(err,cats){
+    if(err){
+        console.log("Error");
+    }else {
+        console.log("Cats:");
+        console.log(cats);
+    }
 });
