@@ -1,18 +1,38 @@
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/cat_app");
 
-const Cat = mongoose.model('Cat', { name: String });
+/*const Cat = mongoose.model('Cat', { name: String });
 
 const kitty = new Cat({ name: 'Zildjian' });
 kitty.save().then(() => console.log('meow'));
+*/
 
 
 
-/*
 var catSchema = new mongoose.Schema({
    name: String,
    age: Number,
    temperament: String
 });
 
-var Cat = mongoose.model("Cat", catSchema);*/
+var Cat = mongoose.model("Cat", catSchema);
+
+//add new cat to db
+
+var akshu = new Cat({
+     name: "Bhavani",
+   age: 6,
+   temperament: "awesome"
+    
+});
+
+//Mongo operation is async and hence we add a callback
+
+akshu.save(function(err, cat){
+    if(err){
+        console.log("There was an error - could not add "+cat +" to db");        
+    }else{
+        console.log("Cat added  to db"+cat);        
+    }
+    
+});
