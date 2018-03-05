@@ -1,49 +1,13 @@
-var app        = require("express")();
-var bodyParser = require("body-parser");
-var ejs        = require("ejs");
-var request    = require("request");
-var mongoose   = require("mongoose");
-
+var app    = require("express")(),
+bodyParser = require("body-parser"),
+ejs        = require("ejs"),
+request    = require("request"),
+mongoose   = require("mongoose"),
+Campground = require("./models/campground.js");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extend:true}));
 mongoose.connect("mongodb://localhost:/camp-db");
-
-var CampSchema = new mongoose.Schema(
-    {
-     name: String,
-     image: String
-    });
-
-var Campground = mongoose.model("Campground", CampSchema);
-
-/*Campground.create(
-            { name: "Sarvani1",
-              image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"
-            }, function(error, campground){
-                if(error){
-                    console.log("Error adding campground:"  + error);
-                }
-});
-
-
-Campground.create(
-            {name: "Granite Hill", 
-            image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"}, function(error, campground){
-                if(error){
-                    console.log("Error adding campground:"  + error);
-                }
-});*/
-
-
-/*
-var campgroundsArr = Campground.find({}, function(err,allCampgrounds){
-                                                    if(err){
-                                                        console.log("Error getting campGrounds");
-                                                    } else{
-                                                        console.log("Campgrounds:", allCampgrounds);
-                                                    }
-                    });*/
 
 
 app.get("/", function(req, resp){
@@ -58,7 +22,7 @@ app.get("/campgrounds", function(req, resp){
            console.log(err);
        } else {
           resp.render("campGrounds",{campgroundsArr : campgroundsArr});
-       }
+       } 
     });
      
 });
@@ -92,6 +56,19 @@ app.post("/campgrounds", function(req, resp){
     });
     resp.render("campGrounds", {campgroundsArr : campgroundsArr});*/
 });
+
+// SHOW - shows more info about one campground
+app.get("/campgrounds/:id", function(req, res){
+    //find the campground with provided ID
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that campground
+            res.render("show", {campground: foundCampground});
+        }
+    });
+})
 
 
 app.listen(process.env.PORT,process.env.IP, function(){
