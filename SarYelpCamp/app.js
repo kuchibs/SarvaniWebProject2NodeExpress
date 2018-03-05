@@ -3,12 +3,14 @@ bodyParser = require("body-parser"),
 ejs        = require("ejs"),
 request    = require("request"),
 mongoose   = require("mongoose"),
-Campground = require("./models/campground.js");
+Campground = require("./models/campground.js"),
+seedDB     =  require("./seeds");;
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extend:true}));
 mongoose.connect("mongodb://localhost:/camp-db");
 
+seedDB();
 
 app.get("/", function(req, resp){
     resp.render("landingPage");
@@ -17,11 +19,11 @@ app.get("/", function(req, resp){
 
 app.get("/campgrounds", function(req, resp){
     
-    Campground.find({}, function(err, campgroundsArr){
+    Campground.find({}, function(err, campgrounds){
        if(err){
-           console.log(err);
+           console.log(err)
        } else {
-          resp.render("campGrounds",{campgroundsArr : campgroundsArr});
+          resp.render("index",{campgrounds : campgrounds});
        } 
     });
      
@@ -44,7 +46,8 @@ app.post("/campgrounds", function(req, resp){
             console.log(err);
         } else {
             //redirect back to campgrounds page
-            resp.redirect("/campgrounds");
+            ///resp.redirect("/campgrounds");
+            resp.redirect("/index");
         }
     });
     /*console.log(req.body.campground);
@@ -60,10 +63,11 @@ app.post("/campgrounds", function(req, resp){
 // SHOW - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
     //find the campground with provided ID
-    Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err);
         } else {
+            console.log(foundCampground)
             //render show template with that campground
             res.render("show", {campground: foundCampground});
         }
