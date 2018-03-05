@@ -17,24 +17,24 @@ app.get("/", function(req, resp){
 });
 
 
-app.get("/campgrounds", function(req, resp){
+app.get("/campground/index", function(req, resp){
     
     Campground.find({}, function(err, campgrounds){
        if(err){
            console.log(err)
        } else {
-          resp.render("index",{campgrounds : campgrounds});
+          resp.render("campground/index",{campgrounds : campgrounds});
        } 
     });
      
 });
 
-app.get("/new", function(req, resp){
-    resp.render("new");
+app.get("/campground/campground/new", function(req, resp){
+    resp.render("campground/new");
 });
 
 
-app.post("/campgrounds", function(req, resp){
+app.post("/campground/index", function(req, resp){
      // get data from form and add to campgrounds array
     var name = req.body.name;
     var image = req.body.image;
@@ -46,30 +46,20 @@ app.post("/campgrounds", function(req, resp){
             console.log(err);
         } else {
             //redirect back to campgrounds page
-            ///resp.redirect("/campgrounds");
-            resp.redirect("/index");
+            resp.redirect("/campground/index");
         }
     });
-    /*console.log(req.body.campground);
-    //campgroundsArr.push({name:req.body.campground, image:req.body.image});
-    campgroundsArr.update({name:req.body.campground, image:req.body.image}, function(error, campgrd){
-        if(error){
-            console.log("Update failed");
-        }
-    });
-    resp.render("campGrounds", {campgroundsArr : campgroundsArr});*/
-});
+ });
 
 // SHOW - shows more info about one campground
-app.get("/campgrounds/:id", function(req, res){
+app.get("/campground/index/:id", function(req, res){
     //find the campground with provided ID
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err);
         } else {
-            console.log(foundCampground)
             //render show template with that campground
-            res.render("show", {campground: foundCampground});
+            res.render("campground/show", {campground: foundCampground});
         }
     });
 })
