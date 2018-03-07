@@ -4,6 +4,7 @@ ejs        = require("ejs"),
 request    = require("request"),
 mongoose   = require("mongoose"),
 Campground = require("./models/campground.js"),
+Comment    = require("./models/comment.js"),
 seedDB     =  require("./seeds");;
 
 app.set("view engine", "ejs");
@@ -62,7 +63,46 @@ app.get("/campground/index/:id", function(req, res){
             res.render("campground/show", {campground: foundCampground});
         }
     });
-})
+});
+
+// *********************************
+//  COMMENT ROUTES - nested routes
+// *********************************
+app.get("/campground/:id/comment/new", function(req, res){
+    // find campground by id
+    Campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err);
+        } else {
+             res.render("comments/new", {campground: campground});
+        }
+    })
+});
+
+app.get("/campground/:id/comments", function(req, res){
+   //lookup campground using ID
+   //create new comment
+   //connect new comment to campground
+   //redirect campground show page
+   Campground.findById(req.params.id, function(err, campground){
+       if(err){
+           console.log(err);
+           res.redirect("/campgrounds");
+       } else {
+        Comment.create(req.body.comment, function(err, comment){
+           if(err){
+               console.log(err);
+           } else {
+               campground.comments.push(comment);
+               campground.save();
+               res.redirect('/campgrounds/' + campground._id);
+           }
+        });
+       }
+   });
+
+});
+
 
 
 app.listen(process.env.PORT,process.env.IP, function(){
