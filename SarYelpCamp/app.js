@@ -5,13 +5,34 @@ request    = require("request"),
 mongoose   = require("mongoose"),
 Campground = require("./models/campground.js"),
 Comment    = require("./models/comment.js"),
-seedDB     =  require("./seeds");;
+User    = require("./models/user.js"),
+seedDB     =  require("./seeds"),
+passport    = require("passport"),
+LocalStrategy = require("passport-local");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extend:true}));
 mongoose.connect("mongodb://localhost:/camp-db");
 
 seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Secret string for hashing",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+   res.locals.currentUser = req.user;
+   next();
+});
+
 
 app.get("/", function(req, resp){
     resp.render("landingPage");
